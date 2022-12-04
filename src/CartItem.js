@@ -3,51 +3,15 @@ import React from "react";
 
 
 class CartItem extends React.Component {
-   
-    // for increasing quantity
-    increaseQuantity = () =>  {
-        //console.log('this.state',this.state);
-        //setState from 1
-        //this.setState({
-          //  qty: this.state.qty +1
-        //});
-
-        //if Previous state require use this
-        this.setState((prevState) => {
-            return {
-                qty: prevState.qty +1
-        }
-    });
-
-}
-
-decreaseQuantity = () =>  {
-    const { qty }  = this.state;
-    if (qty === 0) {
-        return;
-    }
-    
-    this.setState((prevState) => {
-        return {
-            qty: prevState.qty - 1
-    }
-});
-
-}
-
-deleteQuantity = () =>  {
-    this.setState({
-        qty: this.state.qty = 0
-    });
-
-}
-      
-
-
-
     render () {
         console.log('this.props',this.props)
         const {price,title,qty} = this.props.product;
+        const {
+            product,
+            onIncreaseQuantity,
+            onDecreaseQuantity,
+            onDeleteProduct
+        }=this.props;
         return (
             <div className="cart-item">
                 <div className="left-block">
@@ -63,14 +27,14 @@ deleteQuantity = () =>  {
                             alt='increase' 
                             className="action-icons" 
                             src="https://cdn-icons-png.flaticon.com/128/3303/3303893.png"
-                            onClick={this.increaseQuantity}
+                            onClick={() => onIncreaseQuantity(product)}
                             
                          />
                         <img 
                             alt='decrease' 
                             className="action-icons" 
                             src="https://cdn-icons-png.flaticon.com/128/992/992683.png" 
-                            onClick={this.decreaseQuantity}
+                            onClick={() => onDecreaseQuantity(product)}
                             
                             
                         />
@@ -78,7 +42,7 @@ deleteQuantity = () =>  {
                             alt='delete' 
                             className="action-icons" 
                             src="https://t4.ftcdn.net/jpg/01/90/89/15/240_F_190891550_N7uKp2aHE3mOc20dmtDytj7atgvbhdOu.jpg" 
-                            onClick={this.deleteQuantity}
+                            onClick={()  => onDeleteProduct(product.id)}
                         />
                     </div>
                 </div>
