@@ -16,21 +16,21 @@ class App extends React.Component {
                 price: 99,
                 title: 'WATCH',
                 qty: 1,
-                img: '', 
+                img: 'https://images.unsplash.com/photo-1524805444758-089113d48a6d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1888&q=80', 
                 id: 1
             },
             {
                 price: 999,
                 title: 'Phone',
                 qty: 10,
-                img: '', 
+                img: 'https://images.unsplash.com/photo-1525598912003-663126343e1f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80', 
                 id: 2
             },
             {
                 price: 999,
-                title: 'lAPTOP',
+                title: 'LaPTOP',
                 qty: 4,
-                img: '',
+                img: 'https://images.unsplash.com/photo-1603302576837-37561b2e2302?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1168&q=80',
                 id: 3 
             }
         ]
@@ -88,17 +88,51 @@ handleDeleteProduct = (id) => {
 }
 
 
+getCartCount = () => {
+    const { products } = this.state;
+
+    let count =0;
+
+    products.forEach((product) => {
+        
+        count += product.qty;
+        
+    });
+
+
+    return count;
+}
+
+getCartTotal = () => {
+    const { products } = this.state;
+
+    let cartTotal = 0;
+
+
+    products.map((product) => {
+
+        cartTotal = cartTotal + product.qty * product.price;
+
+    })
+
+    return cartTotal;
+}
+
+
+
   render () {
     const { products } = this.state;
     return (
     <div className="App">
-      <Navbar />
+      <Navbar count={this.getCartCount()}/>
       <Cart
         products={products}
         onIncreaseQuantity={this.handleIncreaseQuantity}
         onDecreaseQuantity={this.handleDecreaseQuantity}
         onDeleteProduct={this.handleDeleteProduct}
       />
+
+      <div style={ {padding: 10,fontSize : 20}}>Total: {this.getCartTotal()}</div>
     </div>
   );
 }
